@@ -1,0 +1,36 @@
+{
+    "name": "Echo.Editor",
+    "rootNamespace": "Echo.EditorTools",
+    "references": [
+        "Echo.Game",
+        "Unity.Netcode.Runtime",
+        "Unity.Netcode.Components",
+        "Unity.Networking.Transport",
+        "Unity.AI.Navigation"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "ECHO_NGO",
+        "ECHO_MPS"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.unity.netcode.gameobjects",
+            "expression": "1.8.0",
+            "define": "ECHO_NGO"
+        },
+        {
+            "name": "com.unity.services.multiplayer",
+            "expression": "1.0.0",
+            "define": "ECHO_MPS"
+        }
+    ],
+    "noEngineReferences": false
+}

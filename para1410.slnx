@@ -1,4 +1,7 @@
 ﻿<Solution>
+  <Project Path="Echo.Game.csproj" />
+  <Project Path="Echo.Bootstrap.Editor.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="Echo.Editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
 </Solution>

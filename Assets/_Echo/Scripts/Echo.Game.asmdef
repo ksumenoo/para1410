@@ -1,0 +1,50 @@
+{
+    "name": "Echo.Game",
+    "rootNamespace": "Echo",
+    "references": [
+        "Unity.Netcode.Runtime",
+        "Unity.Netcode.Components",
+        "Unity.Networking.Transport",
+        "Unity.Collections",
+        "Unity.InputSystem",
+        "Unity.Services.Core",
+        "Unity.Services.Authentication",
+        "Unity.Services.Multiplayer",
+        "Unity.Services.Vivox",
+        "Unity.AI.Navigation",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "ECHO_NGO",
+        "ECHO_MPS"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.unity.netcode.gameobjects",
+            "expression": "1.8.0",
+            "define": "ECHO_NGO"
+        },
+        {
+            "name": "com.unity.services.multiplayer",
+            "expression": "1.0.0",
+            "define": "ECHO_MPS"
+        },
+        {
+            "name": "com.unity.services.vivox",
+            "expression": "16.0.0",
+            "define": "ECHO_VIVOX"
+        },
+        {
+            "name": "com.unity.ugui",
+            "expression": "1.0.0",
+            "define": "ECHO_UGUI"
+        }
+    ],
+    "noEngineReferences": false
+}

@@ -1,0 +1,1398 @@
+{
+ "ppu": 100,
+ "sprites": [
+  {
+   "file": "hero_thigh",
+   "pivotX": 0.5,
+   "pivotY": 0.73684
+  },
+  {
+   "file": "hero_thigh_glow",
+   "pivotX": 0.5,
+   "pivotY": 0.67308
+  },
+  {
+   "file": "hero_thigh_rim",
+   "pivotX": 0.5,
+   "pivotY": 0.67308
+  },
+  {
+   "file": "hero_shin",
+   "pivotX": 0.5,
+   "pivotY": 0.73973
+  },
+  {
+   "file": "hero_shin_glow",
+   "pivotX": 0.5,
+   "pivotY": 0.67327
+  },
+  {
+   "file": "hero_shin_rim",
+   "pivotX": 0.5,
+   "pivotY": 0.67327
+  },
+  {
+   "file": "hero_upperarm",
+   "pivotX": 0.5,
+   "pivotY": 0.72131
+  },
+  {
+   "file": "hero_upperarm_glow",
+   "pivotX": 0.5,
+   "pivotY": 0.65169
+  },
+  {
+   "file": "hero_upperarm_rim",
+   "pivotX": 0.5,
+   "pivotY": 0.65169
+  },
+  {
+   "file": "hero_forearm",
+   "pivotX": 0.5,
+   "pivotY": 0.72131
+  },
+  {
+   "file": "hero_forearm_glow",
+   "pivotX": 0.5,
+   "pivotY": 0.65169
+  },
+  {
+   "file": "hero_forearm_rim",
+   "pivotX": 0.5,
+   "pivotY": 0.65169
+  },
+  {
+   "file": "hero_hand",
+   "pivotX": 0.5,
+   "pivotY": 0.5
+  },
+  {
+   "file": "hero_hand_glow",
+   "pivotX": 0.5,
+   "pivotY": 0.5
+  },
+  {
+   "file": "hero_hand_rim",
+   "pivotX": 0.5,
+   "pivotY": 0.5
+  },
+  {
+   "file": "hero_boot",
+   "pivotX": 0.38462,
+   "pivotY": 0.53571
+  },
+  {
+   "file": "hero_boot_glow",
+   "pivotX": 0.43284,
+   "pivotY": 0.51786
+  },
+  {
+   "file": "hero_boot_rim",
+   "pivotX": 0.43284,
+   "pivotY": 0.51786
+  },
+  {
+   "file": "hero_torso_orange",
+   "pivotX": 0.46875,
+   "pivotY": 0.08889
+  },
+  {
+   "file": "hero_torso_white",
+   "pivotX": 0.46875,
+   "pivotY": 0.08889
+  },
+  {
+   "file": "hero_torso_teal",
+   "pivotX": 0.46875,
+   "pivotY": 0.08889
+  },
+  {
+   "file": "hero_torso_graphite",
+   "pivotX": 0.46875,
+   "pivotY": 0.08889
+  },
+  {
+   "file": "hero_torso_glow",
+   "pivotX": 0.47826,
+   "pivotY": 0.18644
+  },
+  {
+   "file": "hero_torso_rim",
+   "pivotX": 0.47826,
+   "pivotY": 0.18644
+  },
+  {
+   "file": "hero_neck",
+   "pivotX": 0.51724,
+   "pivotY": 0.19444
+  },
+  {
+   "file": "hero_neck_glow",
+   "pivotX": 0.50877,
+   "pivotY": 0.32812
+  },
+  {
+   "file": "hero_neck_rim",
+   "pivotX": 0.50877,
+   "pivotY": 0.32812
+  },
+  {
+   "file": "hero_head",
+   "pivotX": 0.48649,
+   "pivotY": 0.12162
+  },
+  {
+   "file": "hero_head_glow",
+   "pivotX": 0.4902,
+   "pivotY": 0.22549
+  },
+  {
+   "file": "hero_head_rim",
+   "pivotX": 0.4902,
+   "pivotY": 0.22549
+  },
+  {
+   "file": "hero_hair_01_short",
+   "pivotX": 0.50667,
+   "pivotY": 0.01429
+  },
+  {
+   "file": "hero_hair_01_short_glow",
+   "pivotX": 0.50485,
+   "pivotY": 0.15306
+  },
+  {
+   "file": "hero_hair_01_short_rim",
+   "pivotX": 0.50485,
+   "pivotY": 0.15306
+  },
+  {
+   "file": "hero_hair_02_sidefringe",
+   "pivotX": 0.49351,
+   "pivotY": 0.01408
+  },
+  {
+   "file": "hero_hair_02_sidefringe_glow",
+   "pivotX": 0.49524,
+   "pivotY": 0.15152
+  },
+  {
+   "file": "hero_hair_02_sidefringe_rim",
+   "pivotX": 0.49524,
+   "pivotY": 0.15152
+  },
+  {
+   "file": "hero_hair_03_curly",
+   "pivotX": 0.52041,
+   "pivotY": 0.01149
+  },
+  {
+   "file": "hero_hair_03_curly_glow",
+   "pivotX": 0.51587,
+   "pivotY": 0.13043
+  },
+  {
+   "file": "hero_hair_03_curly_rim",
+   "pivotX": 0.51587,
+   "pivotY": 0.13043
+  },
+  {
+   "file": "hero_hair_04_ponytail",
+   "pivotX": 0.59341,
+   "pivotY": 0.28866
+  },
+  {
+   "file": "hero_hair_04_ponytail_glow",
+   "pivotX": 0.57143,
+   "pivotY": 0.336
+  },
+  {
+   "file": "hero_hair_04_ponytail_rim",
+   "pivotX": 0.57143,
+   "pivotY": 0.336
+  },
+  {
+   "file": "hero_hair_05_bob",
+   "pivotX": 0.5125,
+   "pivotY": 0.11538
+  },
+  {
+   "file": "hero_hair_05_bob_glow",
+   "pivotX": 0.50926,
+   "pivotY": 0.21698
+  },
+  {
+   "file": "hero_hair_05_bob_rim",
+   "pivotX": 0.50926,
+   "pivotY": 0.21698
+  },
+  {
+   "file": "hero_hair_06_bun",
+   "pivotX": 0.50667,
+   "pivotY": 0.01124
+  },
+  {
+   "file": "hero_hair_06_bun_glow",
+   "pivotX": 0.50485,
+   "pivotY": 0.12821
+  },
+  {
+   "file": "hero_hair_06_bun_rim",
+   "pivotX": 0.50485,
+   "pivotY": 0.12821
+  },
+  {
+   "file": "hero_eyes_01_dots",
+   "pivotX": 0.03125,
+   "pivotY": 0.02703
+  },
+  {
+   "file": "hero_eyes_02_big",
+   "pivotX": 0.05405,
+   "pivotY": 0.025
+  },
+  {
+   "file": "hero_eyes_03_sleepy",
+   "pivotX": 0.1,
+   "pivotY": 0.02941
+  },
+  {
+   "file": "hero_eyes_04_squint",
+   "pivotX": 0.05556,
+   "pivotY": 0.02941
+  },
+  {
+   "file": "hero_face_01_calm",
+   "pivotX": 0.02941,
+   "pivotY": 0.02273
+  },
+  {
+   "file": "hero_face_02_smile",
+   "pivotX": 0.02941,
+   "pivotY": 0.02128
+  },
+  {
+   "file": "hero_face_03_frown",
+   "pivotX": 0.02941,
+   "pivotY": 0.02128
+  },
+  {
+   "file": "hero_face_04_smirk",
+   "pivotX": 0.02941,
+   "pivotY": 0.02083
+  },
+  {
+   "file": "hero_gun_pistol",
+   "pivotX": 0.55882,
+   "pivotY": 0.75
+  },
+  {
+   "file": "hero_gun_pistol_glow",
+   "pivotX": 0.53226,
+   "pivotY": 0.65278
+  },
+  {
+   "file": "hero_gun_pistol_rim",
+   "pivotX": 0.53226,
+   "pivotY": 0.65278
+  },
+  {
+   "file": "hero_muzzle_flash",
+   "pivotX": 0.5,
+   "pivotY": 0.5
+  }
+ ],
+ "bones": [
+  {
+   "name": "Hips",
+   "parent": "Root",
+   "x": 0,
+   "y": 78,
+   "sprite": "",
+   "order": 0,
+   "tint": "none",
+   "glow": false
+  },
+  {
+   "name": "LegF_Upper",
+   "parent": "Hips",
+   "x": -9,
+   "y": 0,
+   "sprite": "hero_thigh",
+   "order": 6,
+   "tint": "suitShade",
+   "glow": true
+  },
+  {
+   "name": "LegF_Lower",
+   "parent": "LegF_Upper",
+   "x": 0,
+   "y": -36,
+   "sprite": "hero_shin",
+   "order": 5,
+   "tint": "suitShade",
+   "glow": true
+  },
+  {
+   "name": "FootF",
+   "parent": "LegF_Lower",
+   "x": 0,
+   "y": -35,
+   "sprite": "hero_boot",
+   "order": 7,
+   "tint": "none",
+   "glow": true
+  },
+  {
+   "name": "LegN_Upper",
+   "parent": "Hips",
+   "x": 9,
+   "y": 0,
+   "sprite": "hero_thigh",
+   "order": 10,
+   "tint": "suit",
+   "glow": true
+  },
+  {
+   "name": "LegN_Lower",
+   "parent": "LegN_Upper",
+   "x": 0,
+   "y": -36,
+   "sprite": "hero_shin",
+   "order": 9,
+   "tint": "suit",
+   "glow": true
+  },
+  {
+   "name": "FootN",
+   "parent": "LegN_Lower",
+   "x": 0,
+   "y": -35,
+   "sprite": "hero_boot",
+   "order": 11,
+   "tint": "none",
+   "glow": true
+  },
+  {
+   "name": "Torso",
+   "parent": "Hips",
+   "x": 0,
+   "y": 0,
+   "sprite": "hero_torso_orange",
+   "order": 14,
+   "tint": "none",
+   "glow": true
+  },
+  {
+   "name": "ArmF_Upper",
+   "parent": "Torso",
+   "x": -5,
+   "y": 64,
+   "sprite": "hero_upperarm",
+   "order": 2,
+   "tint": "suitShade",
+   "glow": true
+  },
+  {
+   "name": "ArmF_Lower",
+   "parent": "ArmF_Upper",
+   "x": 0,
+   "y": -27,
+   "sprite": "hero_forearm",
+   "order": 3,
+   "tint": "suitShade",
+   "glow": true
+  },
+  {
+   "name": "HandF",
+   "parent": "ArmF_Lower",
+   "x": 0,
+   "y": -27,
+   "sprite": "hero_hand",
+   "order": 1,
+   "tint": "skinShade",
+   "glow": true
+  },
+  {
+   "name": "Neck",
+   "parent": "Torso",
+   "x": 4,
+   "y": 66,
+   "sprite": "hero_neck",
+   "order": 12,
+   "tint": "skin",
+   "glow": true
+  },
+  {
+   "name": "Head",
+   "parent": "Torso",
+   "x": 4,
+   "y": 84,
+   "sprite": "hero_head",
+   "order": 16,
+   "tint": "skin",
+   "glow": true
+  },
+  {
+   "name": "Face",
+   "parent": "Head",
+   "x": 0,
+   "y": 0,
+   "sprite": "hero_face_01_calm",
+   "order": 17,
+   "tint": "none",
+   "glow": false
+  },
+  {
+   "name": "Eyes",
+   "parent": "Head",
+   "x": 0,
+   "y": 0,
+   "sprite": "hero_eyes_01_dots",
+   "order": 18,
+   "tint": "none",
+   "glow": false
+  },
+  {
+   "name": "Hair",
+   "parent": "Head",
+   "x": 0,
+   "y": 0,
+   "sprite": "hero_hair_01_short",
+   "order": 19,
+   "tint": "hair",
+   "glow": true
+  },
+  {
+   "name": "ArmN_Upper",
+   "parent": "Torso",
+   "x": 13,
+   "y": 62,
+   "sprite": "hero_upperarm",
+   "order": 22,
+   "tint": "suit",
+   "glow": true
+  },
+  {
+   "name": "ArmN_Lower",
+   "parent": "ArmN_Upper",
+   "x": 0,
+   "y": -27,
+   "sprite": "hero_forearm",
+   "order": 23,
+   "tint": "suit",
+   "glow": true
+  },
+  {
+   "name": "HandN",
+   "parent": "ArmN_Lower",
+   "x": 0,
+   "y": -27,
+   "sprite": "hero_hand",
+   "order": 21,
+   "tint": "skin",
+   "glow": true
+  },
+  {
+   "name": "Gun",
+   "parent": "HandN",
+   "x": 0,
+   "y": 0,
+   "sprite": "hero_gun_pistol",
+   "order": 24,
+   "tint": "none",
+   "glow": true
+  },
+  {
+   "name": "Flash",
+   "parent": "Gun",
+   "x": 4.5,
+   "y": -34,
+   "sprite": "hero_muzzle_flash",
+   "order": 25,
+   "tint": "none",
+   "glow": false
+  }
+ ],
+ "clips": [
+  {
+   "name": "idle",
+   "fps": 2,
+   "loop": true,
+   "keys": [
+    {
+     "bone": "Hips@x",
+     "values": [
+      0,
+      0
+     ]
+    },
+    {
+     "bone": "Hips@y",
+     "values": [
+      78,
+      76
+     ]
+    },
+    {
+     "bone": "Torso",
+     "values": [
+      0,
+      0
+     ]
+    },
+    {
+     "bone": "Head",
+     "values": [
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "bone": "ArmN_Upper",
+     "values": [
+      -15.535,
+      -18.504
+     ]
+    },
+    {
+     "bone": "ArmN_Lower",
+     "values": [
+      37.803,
+      43.875
+     ]
+    },
+    {
+     "bone": "ArmF_Upper",
+     "values": [
+      -20.28,
+      -23.309
+     ]
+    },
+    {
+     "bone": "ArmF_Lower",
+     "values": [
+      38.313,
+      44.327
+     ]
+    },
+    {
+     "bone": "LegN_Upper",
+     "values": [
+      11.635,
+      18.817
+     ]
+    },
+    {
+     "bone": "LegN_Lower",
+     "values": [
+      -18.627,
+      -33.06
+     ]
+    },
+    {
+     "bone": "FootN",
+     "values": [
+      6.992,
+      14.244
+     ]
+    },
+    {
+     "bone": "LegF_Upper",
+     "values": [
+      10.276,
+      17.297
+     ]
+    },
+    {
+     "bone": "LegF_Lower",
+     "values": [
+      -19.188,
+      -33.392
+     ]
+    },
+    {
+     "bone": "FootF",
+     "values": [
+      8.912,
+      16.096
+     ]
+    },
+    {
+     "bone": "Gun",
+     "values": [
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "bone": "Flash@on",
+     "values": [
+      0.0,
+      0.0
+     ]
+    }
+   ]
+  },
+  {
+   "name": "walk",
+   "fps": 8,
+   "loop": true,
+   "keys": [
+    {
+     "bone": "Hips@x",
+     "values": [
+      0,
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "bone": "Hips@y",
+     "values": [
+      76,
+      80,
+      76,
+      80
+     ]
+    },
+    {
+     "bone": "Torso",
+     "values": [
+      -3,
+      -3,
+      -3,
+      -3
+     ]
+    },
+    {
+     "bone": "Head",
+     "values": [
+      1.5,
+      1.5,
+      1.5,
+      1.5
+     ]
+    },
+    {
+     "bone": "ArmN_Upper",
+     "values": [
+      -35.942,
+      -15.033,
+      3.063,
+      -15.033
+     ]
+    },
+    {
+     "bone": "ArmN_Lower",
+     "values": [
+      38.88,
+      38.313,
+      38.88,
+      38.313
+     ]
+    },
+    {
+     "bone": "ArmF_Upper",
+     "values": [
+      -1.011,
+      -17.28,
+      -35.719,
+      -17.28
+     ]
+    },
+    {
+     "bone": "ArmF_Lower",
+     "values": [
+      42.729,
+      38.313,
+      42.729,
+      38.313
+     ]
+    },
+    {
+     "bone": "LegN_Upper",
+     "values": [
+      23.098,
+      2.736,
+      -15.672,
+      18.52
+     ]
+    },
+    {
+     "bone": "LegN_Lower",
+     "values": [
+      -13.609,
+      -13.609,
+      -13.609,
+      -58.385
+     ]
+    },
+    {
+     "bone": "FootN",
+     "values": [
+      -9.489,
+      10.873,
+      29.281,
+      24.866
+     ]
+    },
+    {
+     "bone": "LegF_Upper",
+     "values": [
+      5.949,
+      36.222,
+      35.906,
+      16.943
+     ]
+    },
+    {
+     "bone": "LegF_Lower",
+     "values": [
+      -29.049,
+      -60.288,
+      -13.609,
+      -13.609
+     ]
+    },
+    {
+     "bone": "FootF",
+     "values": [
+      23.099,
+      9.067,
+      -22.297,
+      -3.334
+     ]
+    },
+    {
+     "bone": "Gun",
+     "values": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "bone": "Flash@on",
+     "values": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ]
+  },
+  {
+   "name": "crouch_idle",
+   "fps": 2,
+   "loop": true,
+   "keys": [
+    {
+     "bone": "Hips@x",
+     "values": [
+      0,
+      0
+     ]
+    },
+    {
+     "bone": "Hips@y",
+     "values": [
+      58,
+      56
+     ]
+    },
+    {
+     "bone": "Torso",
+     "values": [
+      -14,
+      -15
+     ]
+    },
+    {
+     "bone": "Head",
+     "values": [
+      7.0,
+      7.5
+     ]
+    },
+    {
+     "bone": "ArmN_Upper",
+     "values": [
+      -2.495,
+      -2.796
+     ]
+    },
+    {
+     "bone": "ArmN_Lower",
+     "values": [
+      69.86,
+      73.299
+     ]
+    },
+    {
+     "bone": "ArmF_Upper",
+     "values": [
+      -9.784,
+      -10.369
+     ]
+    },
+    {
+     "bone": "ArmF_Lower",
+     "values": [
+      68.177,
+      71.816
+     ]
+    },
+    {
+     "bone": "LegN_Upper",
+     "values": [
+      53.734,
+      56.315
+     ]
+    },
+    {
+     "bone": "LegN_Lower",
+     "values": [
+      -88.636,
+      -93.094
+     ]
+    },
+    {
+     "bone": "FootN",
+     "values": [
+      34.902,
+      36.779
+     ]
+    },
+    {
+     "bone": "LegF_Upper",
+     "values": [
+      40.892,
+      42.914
+     ]
+    },
+    {
+     "bone": "LegF_Lower",
+     "values": [
+      -90.273,
+      -94.735
+     ]
+    },
+    {
+     "bone": "FootF",
+     "values": [
+      49.381,
+      51.82
+     ]
+    },
+    {
+     "bone": "Gun",
+     "values": [
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "bone": "Flash@on",
+     "values": [
+      0.0,
+      0.0
+     ]
+    }
+   ]
+  },
+  {
+   "name": "sneak",
+   "fps": 6,
+   "loop": true,
+   "keys": [
+    {
+     "bone": "Hips@x",
+     "values": [
+      0,
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "bone": "Hips@y",
+     "values": [
+      56,
+      59,
+      56,
+      59
+     ]
+    },
+    {
+     "bone": "Torso",
+     "values": [
+      -16,
+      -16,
+      -16,
+      -16
+     ]
+    },
+    {
+     "bone": "Head",
+     "values": [
+      8.0,
+      8.0,
+      8.0,
+      8.0
+     ]
+    },
+    {
+     "bone": "ArmN_Upper",
+     "values": [
+      -14.087,
+      -6.645,
+      4.548,
+      -6.645
+     ]
+    },
+    {
+     "bone": "ArmN_Lower",
+     "values": [
+      76.434,
+      78.688,
+      71.36,
+      78.688
+     ]
+    },
+    {
+     "bone": "ArmF_Upper",
+     "values": [
+      4.548,
+      -6.645,
+      -14.087,
+      -6.645
+     ]
+    },
+    {
+     "bone": "ArmF_Lower",
+     "values": [
+      71.36,
+      78.688,
+      76.434,
+      78.688
+     ]
+    },
+    {
+     "bone": "LegN_Upper",
+     "values": [
+      63.566,
+      39.843,
+      13.641,
+      38.936
+     ]
+    },
+    {
+     "bone": "LegN_Lower",
+     "values": [
+      -87.566,
+      -87.976,
+      -81.81,
+      -103.564
+     ]
+    },
+    {
+     "bone": "FootN",
+     "values": [
+      24.001,
+      48.133,
+      68.169,
+      52.628
+     ]
+    },
+    {
+     "bone": "LegF_Upper",
+     "values": [
+      39.067,
+      62.579,
+      68.683,
+      57.199
+     ]
+    },
+    {
+     "bone": "LegF_Lower",
+     "values": [
+      -94.119,
+      -103.564,
+      -64.648,
+      -83.048
+     ]
+    },
+    {
+     "bone": "FootF",
+     "values": [
+      55.052,
+      28.985,
+      -4.035,
+      25.849
+     ]
+    },
+    {
+     "bone": "Gun",
+     "values": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "bone": "Flash@on",
+     "values": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ]
+  },
+  {
+   "name": "shoot",
+   "fps": 12,
+   "loop": false,
+   "keys": [
+    {
+     "bone": "Hips@x",
+     "values": [
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "bone": "Hips@y",
+     "values": [
+      78,
+      78,
+      78
+     ]
+    },
+    {
+     "bone": "Torso",
+     "values": [
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "bone": "Head",
+     "values": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "bone": "ArmN_Upper",
+     "values": [
+      59.109,
+      60.097,
+      59.109
+     ]
+    },
+    {
+     "bone": "ArmN_Lower",
+     "values": [
+      47.82,
+      70.195,
+      47.82
+     ]
+    },
+    {
+     "bone": "ArmF_Upper",
+     "values": [
+      68.222,
+      59.375,
+      68.222
+     ]
+    },
+    {
+     "bone": "ArmF_Lower",
+     "values": [
+      17.568,
+      54.097,
+      17.568
+     ]
+    },
+    {
+     "bone": "LegN_Upper",
+     "values": [
+      17.229,
+      17.229,
+      17.229
+     ]
+    },
+    {
+     "bone": "LegN_Lower",
+     "values": [
+      -13.609,
+      -13.609,
+      -13.609
+     ]
+    },
+    {
+     "bone": "FootN",
+     "values": [
+      -3.62,
+      -3.62,
+      -3.62
+     ]
+    },
+    {
+     "bone": "LegF_Upper",
+     "values": [
+      -0.618,
+      -0.618,
+      -0.618
+     ]
+    },
+    {
+     "bone": "LegF_Lower",
+     "values": [
+      -13.609,
+      -13.609,
+      -13.609
+     ]
+    },
+    {
+     "bone": "FootF",
+     "values": [
+      14.227,
+      14.227,
+      14.227
+     ]
+    },
+    {
+     "bone": "Gun",
+     "values": [
+      -16.929,
+      -26.292,
+      -16.929
+     ]
+    },
+    {
+     "bone": "Flash@on",
+     "values": [
+      1.0,
+      0.0,
+      0.0
+     ]
+    }
+   ]
+  },
+  {
+   "name": "interact",
+   "fps": 6,
+   "loop": false,
+   "keys": [
+    {
+     "bone": "Hips@x",
+     "values": [
+      0,
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "bone": "Hips@y",
+     "values": [
+      78,
+      68,
+      68,
+      78
+     ]
+    },
+    {
+     "bone": "Torso",
+     "values": [
+      0,
+      -24,
+      -24,
+      0
+     ]
+    },
+    {
+     "bone": "Head",
+     "values": [
+      0.0,
+      12.0,
+      12.0,
+      0.0
+     ]
+    },
+    {
+     "bone": "ArmN_Upper",
+     "values": [
+      -15.535,
+      26.176,
+      26.176,
+      -15.535
+     ]
+    },
+    {
+     "bone": "ArmN_Lower",
+     "values": [
+      37.803,
+      15.606,
+      15.606,
+      37.803
+     ]
+    },
+    {
+     "bone": "ArmF_Upper",
+     "values": [
+      -20.28,
+      0.643,
+      0.643,
+      -20.28
+     ]
+    },
+    {
+     "bone": "ArmF_Lower",
+     "values": [
+      38.313,
+      61.576,
+      61.576,
+      38.313
+     ]
+    },
+    {
+     "bone": "LegN_Upper",
+     "values": [
+      11.635,
+      39.336,
+      39.336,
+      11.635
+     ]
+    },
+    {
+     "bone": "LegN_Lower",
+     "values": [
+      -18.627,
+      -62.592,
+      -62.592,
+      -18.627
+     ]
+    },
+    {
+     "bone": "FootN",
+     "values": [
+      6.992,
+      23.256,
+      23.256,
+      6.992
+     ]
+    },
+    {
+     "bone": "LegF_Upper",
+     "values": [
+      10.276,
+      28.84,
+      28.84,
+      10.276
+     ]
+    },
+    {
+     "bone": "LegF_Lower",
+     "values": [
+      -19.188,
+      -64.422,
+      -64.422,
+      -19.188
+     ]
+    },
+    {
+     "bone": "FootF",
+     "values": [
+      8.912,
+      35.582,
+      35.582,
+      8.912
+     ]
+    },
+    {
+     "bone": "Gun",
+     "values": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "bone": "Flash@on",
+     "values": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ]
+  }
+ ],
+ "hair": [
+  "hero_hair_01_short",
+  "hero_hair_02_sidefringe",
+  "hero_hair_03_curly",
+  "hero_hair_04_ponytail",
+  "hero_hair_05_bob",
+  "hero_hair_06_bun"
+ ],
+ "eyes": [
+  "hero_eyes_01_dots",
+  "hero_eyes_02_big",
+  "hero_eyes_03_sleepy",
+  "hero_eyes_04_squint"
+ ],
+ "faces": [
+  "hero_face_01_calm",
+  "hero_face_02_smile",
+  "hero_face_03_frown",
+  "hero_face_04_smirk"
+ ],
+ "torsos": [
+  "hero_torso_orange",
+  "hero_torso_white",
+  "hero_torso_teal",
+  "hero_torso_graphite"
+ ],
+ "suitColors": [
+  "#ee8a3c",
+  "#e6eaee",
+  "#3fa9a1",
+  "#626a7a"
+ ],
+ "suitShades": [
+  "#c9662b",
+  "#b9c1ca",
+  "#2d817b",
+  "#474d5b"
+ ],
+ "skinColors": [
+  "#f5d2b3",
+  "#e6b08a",
+  "#c68a62",
+  "#8f5c3e",
+  "#5e3d2b"
+ ],
+ "hairColors": [
+  "#2e2826",
+  "#5a3d2b",
+  "#8a5a34",
+  "#e8c983",
+  "#c45a2c",
+  "#c9c9cc"
+ ]
+}
