@@ -33,6 +33,11 @@ namespace Echo
 
         [Header("Вид")]
         public Renderer bodyRenderer;
+        [Tooltip("Спрайт художника (если есть): заменяет капсулу, повёрнут к камере")]
+        public SpriteRenderer spriteRenderer;
+        public Sprite guardSprite;
+        public Sprite soldierSprite;
+        public float cameraPitch = 50f;
         public Material guardMaterial;
         public Material soldierMaterial;
         public Renderer alertIcon;
@@ -103,6 +108,11 @@ namespace Echo
         void ApplyLook()
         {
             if (bodyRenderer) bodyRenderer.sharedMaterial = Soldier.Value ? soldierMaterial : guardMaterial;
+            var sprite = Soldier.Value ? soldierSprite : guardSprite;
+            if (spriteRenderer) spriteRenderer.sprite = sprite;
+            bool useSprite = spriteRenderer != null && sprite != null;
+            if (spriteRenderer) spriteRenderer.enabled = useSprite;
+            if (bodyRenderer) bodyRenderer.enabled = !useSprite;
             BuildCone();
         }
 
@@ -134,7 +144,19 @@ namespace Echo
         void LateUpdate()
         {
             if (!IsSpawned) return;
-            if (_coneSoldier != Soldier.Value) BuildCone();
+            if (_coneSoldier != Soldier.Value) { BuildCone(); ApplyLook(); }
+            if (spriteRenderer && spriteRenderer.enabled)
+            {
+                var t = spriteRenderer.transform;
+                t.rotation = Quaternion.Euler(cameraPitch, 0f, 0f);
+                float fx = transform.forward.x;
+                if (Mathf.Abs(fx) > 0.1f)
+                {
+                    var sc = t.localScale;
+                    sc.x = Mathf.Abs(sc.x) * (fx < 0f ? -1f : 1f);
+                    t.localScale = sc;
+                }
+            }
             var state = Current;
             if (alertIcon)
             {
@@ -153,6 +175,7 @@ namespace Echo
         {
             if (!IsServer || !IsSpawned || !_agent.enabled || !_agent.isOnNavMesh) return;
             if (GameDirector.I != null && GameDirector.I.Restarting) return;
+            if (GameEvents.EnemiesPaused) { _agent.isStopped = true; return; }
             if (Stunned.Value)
             {
                 if (Time.time < _stunUntil) { _agent.isStopped = true; return; }

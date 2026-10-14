@@ -121,6 +121,11 @@ namespace Echo.EditorTools
                          .OrderBy(mi => ((EchoBuildStepAttribute)mi.GetCustomAttributes(typeof(EchoBuildStepAttribute), false)[0]).Order))
                 step.Invoke(null, new object[] { ctx });
 
+            // Линия 2 — зеркальная: Герой 2 идёт по экрану справа налево.
+            // Отражаем раскладку (позиции и повороты), а не масштаб: тексты остаются читаемыми, коллайдеры — с положительным размером.
+            MirrorX(line2);
+            lines.line2Mirrored = true;
+
             // Навигация для охраны и мутантов (печётся на сервере при старте)
             foreach (var root in new[] { line1, line2 })
             {
@@ -139,6 +144,18 @@ namespace Echo.EditorTools
             AddSceneToBuild(ScenePath);
             AssetDatabase.SaveAssets();
             Debug.Log("[Echo] Сцена собрана: " + ScenePath + ". Нажми Play и выбери «Один ПК».");
+        }
+
+        static void MirrorX(Transform root)
+        {
+            foreach (Transform child in root)
+            {
+                var p = child.localPosition;
+                child.localPosition = new Vector3(-p.x, p.y, p.z);
+                var q = child.localRotation;
+                child.localRotation = new Quaternion(q.x, -q.y, -q.z, q.w);
+                MirrorX(child);
+            }
         }
 
         static void BuildTestContent(Transform line1, Transform line2)
@@ -302,6 +319,18 @@ namespace Echo.EditorTools
             mr.shadowCastingMode = ShadowCastingMode.Off;
 
             guard.bodyRenderer = body.GetComponent<Renderer>();
+            // Спрайты художника (Assets/Art/Enemies/enm_guard.png, enm_soldier.png), если уже есть
+            guard.guardSprite = LoadEnemySprite("enm_guard");
+            guard.soldierSprite = LoadEnemySprite("enm_soldier");
+            if (guard.guardSprite != null || guard.soldierSprite != null)
+            {
+                var sp = new GameObject("Sprite");
+                sp.transform.SetParent(go.transform, false);
+                var sr = sp.AddComponent<SpriteRenderer>();
+                sr.sprite = guard.guardSprite != null ? guard.guardSprite : guard.soldierSprite;
+                sr.shadowCastingMode = ShadowCastingMode.Off;
+                guard.spriteRenderer = sr;
+            }
             guard.guardMaterial = m.guard;
             guard.soldierMaterial = m.soldier;
             guard.alertIcon = icon.GetComponent<Renderer>();
@@ -362,6 +391,29 @@ namespace Echo.EditorTools
                 hero.aura = aura;
             }
             return SavePrefab(go, "Hero");
+        }
+
+        // Спрайт врага 256×256, ноги у нижнего края → пивот снизу по центру, рост ≈ 2,3 м.
+        static Sprite LoadEnemySprite(string name)
+        {
+            string path = "Assets/Art/Enemies/" + name + ".png";
+            var ti = AssetImporter.GetAtPath(path) as TextureImporter;
+            if (ti == null) return null;
+            if (ti.textureType != TextureImporterType.Sprite || ti.spritePivot != new Vector2(0.5f, 0f))
+            {
+                ti.textureType = TextureImporterType.Sprite;
+                ti.spriteImportMode = SpriteImportMode.Single;
+                ti.spritePixelsPerUnit = 110f;
+                ti.mipmapEnabled = false;
+                ti.alphaIsTransparency = true;
+                var st = new TextureImporterSettings();
+                ti.ReadTextureSettings(st);
+                st.spriteAlignment = (int)SpriteAlignment.Custom;
+                st.spritePivot = new Vector2(0.5f, 0f);
+                ti.SetTextureSettings(st);
+                ti.SaveAndReimport();
+            }
+            return AssetDatabase.LoadAssetAtPath<Sprite>(path);
         }
 
         const string RigPrefabPath = "Assets/Art/Characters/Hero/Generated/Hero.prefab";

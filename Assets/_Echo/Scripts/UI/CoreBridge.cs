@@ -50,8 +50,9 @@ namespace Echo.UI
             bool show = !UiSettings.HideLegacyUi;
             var hud = UnityEngine.Object.FindFirstObjectByType<Hud>();
             if (hud != null && hud.enabled != show) hud.enabled = show;
+            // Меню отключаем флагом, а не enabled = false: у NetworkBootstrap в Start подписка на сеть.
             var boot = Boot;
-            if (boot != null && boot.enabled != show) boot.enabled = show;
+            if (boot != null && boot.drawLegacyGui != show) boot.drawLegacyGui = show;
         }
     }
 }

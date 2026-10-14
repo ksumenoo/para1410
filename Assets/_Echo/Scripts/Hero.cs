@@ -57,6 +57,11 @@ namespace Echo
         public bool IsHiding => HidingIn.Value >= 0;
         public bool InventoryOpen { get; private set; }
 
+        // Подсказка «что сделает E» для своего героя (считается локально, для HUD).
+        public string InteractHint { get; private set; } = "";
+        float _hintTimer;
+        static Transform[] _reactorCache;
+
         // Только на сервере: держит ли игрок кнопку действия (для реактора).
         public bool Holding { get; private set; }
 
@@ -114,6 +119,9 @@ namespace Echo
             if (InputScheme.NextSlot(this, kb)) SelectedSlot++;
             if (SelectedSlot >= Capacity) SelectedSlot = 0;
 
+            _hintTimer -= Time.deltaTime;
+            if (_hintTimer <= 0f) { _hintTimer = 0.15f; InteractHint = ComputeHint(); }
+
             // Действия
             if (InputScheme.InteractDown(this, kb))
             {
@@ -133,6 +141,68 @@ namespace Echo
                 var inv = Inventory();
                 if (SelectedSlot < inv.Count) DropRpc(inv[SelectedSlot].NetworkObjectId, toss);
             }
+        }
+
+        string ComputeHint()
+        {
+            string key = InputScheme.InteractKey(this);
+            if (IsHiding) return key + " — выйти из шкафчика";
+            int line = Line.Value;
+            Vector3 here = transform.position;
+
+            Item bestItem = null;
+            float best = interactRadius;
+            foreach (var it in Item.All)
+            {
+                if (!it.IsSpawned || !it.InWorld || it.Line.Value != line) continue;
+                float d = FlatDistance(it.WorldPos, here);
+                if (d < best) { best = d; bestItem = it; }
+            }
+            if (bestItem != null) return key + " — взять: " + bestItem.DisplayName;
+
+            Door bestDoor = null;
+            best = interactRadius + 1f;
+            foreach (var door in Door.All)
+            {
+                if (!door.IsSpawned || door.Open.Value || door.Line.Value != line) continue;
+                float d = FlatDistance(door.transform.position, here);
+                if (d < best) { best = d; bestDoor = door; }
+            }
+            if (bestDoor != null)
+            {
+                int k = bestDoor.KeyId.Value;
+                if (k == 0) return key + " — открыть дверь";
+                bool has = Inventory().Exists(i => i.ItemType == ItemType.Key && i.KeyId.Value == k);
+                return has ? key + " — открыть дверь ключом " + k : "Заперто: нужен ключ " + k;
+            }
+
+            foreach (var l in LockerSpot.All)
+                if (TimeLines.I.LineOf(l.transform.position) == line && FlatDistance(l.transform.position, here) < 1.8f)
+                    return key + " — спрятаться в шкафчик";
+
+            bool swapped = Line.Value != HeroId;
+            if (!swapped)
+            {
+                if (_reactorCache == null || _reactorCache.Length == 0 || _reactorCache[0] == null)
+                    _reactorCache = System.Array.ConvertAll(FindObjectsByType<ReactorMarker>(FindObjectsSortMode.None), r => r.transform);
+                foreach (var r in _reactorCache)
+                    if (r != null && TimeLines.I.LineOf(r.position) == line && FlatDistance(r.position, here) < 2.8f)
+                        return "Держи " + key + " вместе с напарником — сопряжение";
+            }
+            return "";
+        }
+
+        // ---------- Отладка (пульт EchoRemote, только сервер) ----------
+
+        public void DebugInteract() { if (IsServer) ServerInteract(); }
+        public void DebugHold(bool held) { if (IsServer) Holding = held; }
+        public void DebugDrop(bool toss)
+        {
+            if (!IsServer) return;
+            var inv = Inventory();
+            if (inv.Count == 0) return;
+            if (toss) ItemSystem.ServerThrow(this, inv[0], throwDistance);
+            else ItemSystem.ServerDrop(this, inv[0]);
         }
 
         // ---------- RPC: клиент -> сервер ----------

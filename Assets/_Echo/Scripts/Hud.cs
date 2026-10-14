@@ -79,6 +79,8 @@ namespace Echo
                 GUI.Label(new Rect(12f, y0 + 36f, w - 24f, 24f),
                     (mine ? "В руке: " + sel + "   ·   " : "Инвентарь: " + sel + "   ·   ") + inv.Count + "/" + hero.Capacity, _label);
             }
+            if (mine && !string.IsNullOrEmpty(hero.InteractHint))
+                GUI.Label(new Rect(0f, y0 + hh - 64f, w, 28f), hero.InteractHint, _toast);
             if (hero.IsHiding)
                 GUI.Label(new Rect(0f, y0 + hh / 2f - 20f, w, 30f), "В шкафчике", _toast);
 

@@ -21,7 +21,7 @@ namespace Echo.UI
             _root = bg.gameObject;
 
             var panel = UiKit.Box("Panel", bg.transform, UiKit.Panel);
-            UiKit.Place(panel.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(580f, 640f));
+            UiKit.Place(panel.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(580f, 720f));
             var p = panel.transform;
 
             Lbl(p, "Наоборот получилось", 38, UiKit.Accent, 22f, 52f, true, TextAnchor.MiddleCenter);
@@ -44,7 +44,16 @@ namespace Echo.UI
             Btn(p, "Войти по IP", 145f, 428f, 270f, 42f, () => CoreBridge.JoinIp(_ip.text.Trim()));
 
             Btn(p, "Один ПК (оба героя с одной клавиатуры)", 0f, 494f, 540f, 50f, () => CoreBridge.StartSinglePc(), 20, true);
-            _status = Lbl(p, "", 15, UiKit.Danger, 556f, 70f);
+            var quit = Btn(p, "Выйти из игры", 0f, 556f, 540f, 42f, () =>
+            {
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
+                Application.Quit();
+#endif
+            }, 18, false);
+            quit.GetComponent<Image>().color = new Color(0.7f, 0.25f, 0.25f, 1f);
+            _status = Lbl(p, "", 15, UiKit.Danger, 610f, 70f);
         }
 
         Text Lbl(Transform parent, string text, int size, Color color, float y, float height, bool bold = false, TextAnchor anchor = TextAnchor.UpperCenter)

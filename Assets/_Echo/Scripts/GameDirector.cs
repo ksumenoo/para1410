@@ -25,6 +25,9 @@ namespace Echo
         public bool Swapped { get; private set; }
         public bool Restarting { get; private set; }
 
+        // Отладка (пульт): поимка и смерть не перезапускают комнату.
+        public static bool DebugGodMode;
+
         NetworkManager _nm;
         readonly List<Transform> _reactors = new List<Transform>();
         readonly List<Vector3> _checkpoints = new List<Vector3>();   // локальные позиции, по возрастанию x
@@ -49,6 +52,7 @@ namespace Echo
 
         void OnServerStarted()
         {
+            GameEvents.EnemiesPaused = false;
             Swapped = false;
             Restarting = false;
             _hold = 0f;
@@ -62,7 +66,7 @@ namespace Echo
             for (int id = 1; id <= 2; id++)
             {
                 var pos = lines.ToWorld(lines.startLocal, id);
-                var no = Instantiate(heroPrefab, pos, Quaternion.identity);
+                var no = Instantiate(heroPrefab, pos, Quaternion.LookRotation(Vector3.right * lines.ForwardSign(id)));
                 no.SpawnWithOwnership(NetworkManager.ServerClientId, true);
                 var hero = no.GetComponent<Hero>();
                 hero.HeroIdVar.Value = id;
@@ -135,6 +139,13 @@ namespace Echo
             foreach (var h in Hero.All)
             {
                 if (!h.IsSpawned) continue;
+                // Страховка: провалился под уровень — вернуть на чекпоинт.
+                if (h.transform.position.y < -8f && !Restarting)
+                {
+                    h.HidingIn.Value = -1;
+                    h.TeleportRpc(TimeLines.I.ToWorld(CheckpointFor(h), h.Line.Value));
+                    continue;
+                }
                 float x = h.LocalPos.x;
                 _reached.TryGetValue(h.NetworkObjectId, out int idx);
                 while (idx + 1 < _checkpoints.Count && x >= _checkpoints[idx + 1].x - 0.5f) idx++;
@@ -150,13 +161,13 @@ namespace Echo
 
         public void ServerCaught(Hero hero)
         {
-            if (Restarting) return;
+            if (Restarting || DebugGodMode || GameEvents.EnemiesPaused) return;
             StartCoroutine(RestartRoom("Герой " + hero.HeroId + " пойман. Комната заново."));
         }
 
         public void ServerKilled(Hero hero)
         {
-            if (Restarting) return;
+            if (Restarting || DebugGodMode || GameEvents.EnemiesPaused) return;
             StartCoroutine(RestartRoom("Герой " + hero.HeroId + " погиб. Комната заново."));
         }
 

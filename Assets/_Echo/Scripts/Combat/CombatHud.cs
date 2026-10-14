@@ -40,7 +40,8 @@ namespace Echo.Combat
             {
                 if (Time.time < hp.FlashUntil)
                 {
-                    GUI.color = new Color(1f, 0f, 0f, 0.25f * (hp.FlashUntil - Time.time) / 0.35f);
+                    float f = (hp.FlashUntil - Time.time) / HeroHealth.FlashSeconds;
+                    GUI.color = new Color(1f, 0.05f, 0.05f, 0.4f * f);
                     GUI.DrawTexture(new Rect(0f, y0, w, hh), Texture2D.whiteTexture);
                 }
                 for (int i = 0; i < HeroHealth.MaxHp; i++)

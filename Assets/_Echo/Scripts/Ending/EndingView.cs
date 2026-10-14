@@ -14,7 +14,7 @@ namespace Echo.Ending
         readonly GameObject _screenRoot;
         readonly CanvasGroup _screenGroup;
         readonly Image _background;
-        readonly Text _title, _body;
+        readonly Text _title, _body, _epilogue;
         int _shownChoice;
         float _shownAt;
 
@@ -42,7 +42,7 @@ namespace Echo.Ending
 
             var strip = UiKit.Box("Strip", _background.transform, new Color(0f, 0f, 0f, 0.62f), false);
             strip.rectTransform.anchorMin = new Vector2(0f, 0f);
-            strip.rectTransform.anchorMax = new Vector2(1f, 0.4f);
+            strip.rectTransform.anchorMax = new Vector2(1f, 0.46f);
             strip.rectTransform.offsetMin = Vector2.zero;
             strip.rectTransform.offsetMax = Vector2.zero;
 
@@ -50,6 +50,9 @@ namespace Echo.Ending
             UiKit.Place(_title.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -18f), new Vector2(1000f, 70f));
             _body = UiKit.Label("Body", strip.transform, "", 24, Color.white, TextAnchor.UpperCenter);
             UiKit.Place(_body.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -96f), new Vector2(980f, 100f));
+            _epilogue = UiKit.Label("Epilogue", strip.transform, "", 28, UiKit.Accent, TextAnchor.MiddleCenter, true);
+            _epilogue.fontStyle = FontStyle.Italic;
+            UiKit.Place(_epilogue.rectTransform, new Vector2(0.5f, 1f), new Vector2(0.5f, 1f), new Vector2(0f, -190f), new Vector2(980f, 40f));
             var menu = UiKit.MakeButton("Menu", strip.transform, "В меню", UiKit.Button, () => CoreBridge.Leave(), 24);
             UiKit.Place(menu.GetComponent<RectTransform>(), new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0f, 18f), new Vector2(240f, 54f));
             _screenRoot.SetActive(false);
@@ -108,6 +111,7 @@ namespace Echo.Ending
                 }
                 UiKit.Set(_title, EndingState.Title(choice));
                 UiKit.Set(_body, EndingState.Text(choice));
+                UiKit.Set(_epilogue, EndingState.Epilogue(choice));
                 UiKit.SetActive(_screenRoot, true);
             }
             _screenGroup.alpha = Mathf.Clamp01((Time.unscaledTime - _shownAt) / 1.5f);

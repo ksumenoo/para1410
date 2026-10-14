@@ -6,31 +6,48 @@ namespace Echo.Combat
     // (аномалия — стены ему не помеха). Касание = удар. Рассеян пулей — собирается снова через 4 с.
     public class TimeClot : Enemy
     {
-        [Header("Сгусток")]
-        public float sightRange = 9f;
-        public float loseRange = 14f;
-        public float speed = 1.2f;
+        [System.NonSerialized] public float sightRange = 9f;
+        [System.NonSerialized] public float loseRange = 14f;
+        [System.NonSerialized] public float speed = 1.2f;
 
-        [Header("Вид (заглушка)")]
+        [Header("Вид (заглушка-капсула)")]
         public Transform visual;
         public Renderer[] renderers;
+
+        [Header("Спрайт художника (если есть — вместо капсулы)")]
+        public SpriteRenderer spriteRenderer;  // дочерний у visual: дрожит и рассеивается вместе с ним
+        public Sprite sprite;                  // enm_timeclot: лицом вправо, низ у нижнего края
+        public float cameraPitch = 50f;
 
         static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
 
         float _form = 1f;
+        float _calm;
         float _jitterTimer;
         Vector3 _offset;
         Vector3 _visualBase;
         Color[] _baseColors;
         MaterialPropertyBlock _mpb;
         float _seed;
+        bool _useSprite;
 
         protected override string DamageMessage => "Сгусток времени обжёг тебя!";
 
         void Awake()
         {
+            touchRadius = 0.9f;
             if (visual) _visualBase = visual.localPosition;
             _seed = Random.value * 100f;
+            _useSprite = spriteRenderer != null && sprite != null;
+            if (spriteRenderer)
+            {
+                spriteRenderer.enabled = _useSprite;
+                if (_useSprite) spriteRenderer.sprite = sprite;
+            }
+            if (_useSprite && renderers != null)
+                foreach (var r in renderers) if (r) r.enabled = false;
+            if (_useSprite && visual != null)
+                foreach (var r in visual.GetComponentsInChildren<MeshRenderer>(true)) r.enabled = false;
             _mpb = new MaterialPropertyBlock();
             _baseColors = new Color[renderers != null ? renderers.Length : 0];
             for (int i = 0; i < _baseColors.Length; i++)
@@ -42,13 +59,20 @@ namespace Echo.Combat
 
         // ---------- Сервер ----------
 
+        public override void ServerOnSwapped()
+        {
+            Target = null;
+            _calm = SwapCalmSeconds;
+        }
+
         protected override void ServerTick(float dt)
         {
+            if (_calm > 0f) { _calm -= dt; Target = null; }
             var t = Target;
             if (t != null && (!t.IsSpawned || t.Line.Value != _line || t.IsHiding ||
                               Hero.FlatDistance(t.transform.position, transform.position) > loseRange))
                 t = null;
-            if (t == null) t = FindVisibleHero(sightRange);
+            if (t == null && _calm <= 0f) t = FindVisibleHero(sightRange);
             Target = t;
 
             Vector3 goal = t != null ? t.transform.position : _spawnPos;
@@ -85,8 +109,22 @@ namespace Echo.Combat
             float pulse = 1f + 0.06f * Mathf.Sin(t * 23f);
             visual.localScale = Vector3.one * Mathf.Lerp(0.05f, 1f, _form) * pulse;
 
-            if (renderers == null) return;
             float flicker = 0.6f + 0.4f * Mathf.PerlinNoise(t * 6f, _seed);
+            if (_useSprite)
+            {
+                var st = spriteRenderer.transform;
+                st.rotation = Quaternion.Euler(cameraPitch, 0f, 0f);
+                float fx = transform.forward.x;
+                if (Mathf.Abs(fx) > 0.1f)
+                {
+                    var sc = st.localScale;
+                    sc.x = Mathf.Abs(sc.x) * (fx < 0f ? -1f : 1f);
+                    st.localScale = sc;
+                }
+                spriteRenderer.color = new Color(1f, 1f, 1f, Mathf.Clamp01(0.45f + 0.5f * flicker) * _form);
+                return;
+            }
+            if (renderers == null) return;
             for (int i = 0; i < renderers.Length; i++)
             {
                 if (!renderers[i]) continue;

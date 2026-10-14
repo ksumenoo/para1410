@@ -86,6 +86,12 @@ namespace Echo.Combat.EditorBuild
             mutant.bodyRenderer = torso.GetComponent<Renderer>();
             mutant.calmMaterial = body;
             mutant.angryMaterial = angry;
+
+            // Спрайты художника (Assets/Art/Enemies/enm_mutant.png, enm_mutant_dead.png), если уже есть
+            mutant.aliveSprite = LoadEnemySprite("enm_mutant");
+            mutant.deadSprite = LoadEnemySprite("enm_mutant_dead");
+            if (mutant.aliveSprite != null)
+                mutant.spriteRenderer = SpriteChild(go.transform, mutant.aliveSprite);
             return Save(go, dir + "/Mutant.prefab");
         }
 
@@ -95,7 +101,6 @@ namespace Echo.Combat.EditorBuild
             go.AddComponent<NetworkObject>();
             NoScaleTransform(go);
             var clot = go.AddComponent<TimeClot>();
-            clot.touchRadius = 0.9f;
 
             var visual = new GameObject("Visual").transform;
             visual.SetParent(go.transform, false);
@@ -105,7 +110,47 @@ namespace Echo.Combat.EditorBuild
 
             clot.visual = visual;
             clot.renderers = new[] { c.GetComponent<Renderer>(), s.GetComponent<Renderer>() };
+
+            // Спрайт художника (Assets/Art/Enemies/enm_timeclot.png), если уже есть
+            clot.sprite = LoadEnemySprite("enm_timeclot");
+            if (clot.sprite != null)
+                clot.spriteRenderer = SpriteChild(visual, clot.sprite);
             return Save(go, dir + "/TimeClot.prefab");
+        }
+
+        static SpriteRenderer SpriteChild(Transform parent, Sprite sprite)
+        {
+            var sp = new GameObject("Sprite");
+            sp.transform.SetParent(parent, false);
+            sp.transform.localRotation = Quaternion.Euler(50f, 0f, 0f);
+            var sr = sp.AddComponent<SpriteRenderer>();
+            sr.sprite = sprite;
+            sr.shadowCastingMode = ShadowCastingMode.Off;
+            return sr;
+        }
+
+        // Как у охраны в ядре: спрайт 256×256, ноги у нижнего края → пивот снизу по центру, PPU 110 (рост ≈ 2,3 м).
+        static Sprite LoadEnemySprite(string name)
+        {
+            string path = "Assets/Art/Enemies/" + name + ".png";
+            var ti = AssetImporter.GetAtPath(path) as TextureImporter;
+            if (ti == null) return null;
+            if (ti.textureType != TextureImporterType.Sprite || ti.spritePivot != new Vector2(0.5f, 0f) ||
+                !Mathf.Approximately(ti.spritePixelsPerUnit, 110f))
+            {
+                ti.textureType = TextureImporterType.Sprite;
+                ti.spriteImportMode = SpriteImportMode.Single;
+                ti.spritePixelsPerUnit = 110f;
+                ti.mipmapEnabled = false;
+                ti.alphaIsTransparency = true;
+                var st = new TextureImporterSettings();
+                ti.ReadTextureSettings(st);
+                st.spriteAlignment = (int)SpriteAlignment.Custom;
+                st.spritePivot = new Vector2(0.5f, 0f);
+                ti.SetTextureSettings(st);
+                ti.SaveAndReimport();
+            }
+            return AssetDatabase.LoadAssetAtPath<Sprite>(path);
         }
 
         static void NoScaleTransform(GameObject go)

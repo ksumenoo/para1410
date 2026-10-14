@@ -77,6 +77,13 @@ namespace Echo.Levels
             // Восточная стена с дверью в служебный коридор
             k.WallZ(26f, -9f, 9f, m.lobbyWall, Zone.Public, -1, Gap(0f, 3f));
             k.PlaceDoor(1, 1, V(26f, 0f, 0f));
+            k.Sign("ДВЕРЬ 1 · НУЖЕН КЛЮЧ 1", V(24.5f, 0f, -3.4f), 0.28f);
+            if (!k.L1) k.Sign("ДВЕРЬ ЗАПЕРТА · НАПАРНИК ОТКРОЕТ ЕЁ В ПРОШЛОМ", V(17f, 0f, -2.2f), 0.26f);
+            k.Sign("КЛЮЧ-КАРТА НА РЕСЕПШЕНЕ", V(15f, 0f, 4.6f), 0.28f);
+            k.Arrow(V(6f, 0f, 2.5f), -35f);
+            k.Arrow(V(10f, 0f, 4.5f), -15f);
+            k.Arrow(V(19f, 0f, 1.2f), 0f);
+            k.Arrow(V(21f, 0f, 0f), 0f);
 
             // Ресепшен и ключ-карта
             k.Box("Reception", V(15f, 0.55f, 7.4f), V(7f, 1.1f, 1.4f), m.wood);
@@ -121,6 +128,7 @@ namespace Echo.Levels
                 k.Box("FallenBeam", V(-3f, 0.2f, 1f), V(4f, 0.4f, 0.4f), m.metal, true, 70f);
                 k.Box("BrokenCase", V(7.5f, 0.3f, -3.4f), V(1.2f, 0.6f, 0.8f), m.rubble, true, 15f);
                 k.PlaceItem(ItemType.Pistol, 0, V(4f, 0f, 3f)); // пистолет Героя 2
+                k.Sign("ПИСТОЛЕТ ГЕРОЯ 2 · E — ВЗЯТЬ", V(4f, 0f, 1.3f), 0.26f);
             }
             k.GlowLight(V(2f, 3.5f, 0f));
             k.GlowLight(V(14f, 3.5f, 0f));
@@ -129,6 +137,9 @@ namespace Echo.Levels
             k.PlaceMutant(V(10f, 0f, -1f));
             k.PlaceMutant(V(17f, 0f, -5f));
             k.PlaceMutant(V(20f, 0f, 3f));
+            k.PlaceMutant(V(7f, 0f, 1.5f), true);
+            k.PlaceMutant(V(1f, 0f, -4f), true);
+            k.PlaceMutant(V(12f, 0f, 5f), true);
         }
 
         // ---------- 1б. Служебный коридор ----------
@@ -144,6 +155,9 @@ namespace Echo.Levels
             k.Locker(V(39f, 0f, -2.95f), 0f, m.locker);
             k.Box("Crates", V(29.5f, 0.5f, -2.8f), V(1f, 1f, 1f), m.crate);
             k.Sign("СЛУЖЕБНЫЙ КОРИДОР", V(35f, 0f, 0.4f), 0.35f);
+            k.Sign("ШКАФЧИК · E — СПРЯТАТЬСЯ", V(36f, 0f, 2.2f), 0.24f);
+            k.Arrow(V(29f, 0f, 0f), 0f);
+            k.Arrow(V(41f, 0f, 0f), 0f);
 
             k.PlaceGuard(false, V(30f, 0f, -1.5f), V(42f, 0f, -1.5f), V(42f, 0f, 1.5f), V(30f, 0f, 1.5f));
 
@@ -220,6 +234,17 @@ namespace Echo.Levels
             k.PlaceItem(ItemType.Backpack, 0, V(74f, 0.55f, -6f));
             k.Sign("РАЗДЕВАЛКА", V(74f, 0f, -4.2f), 0.3f);
             k.Sign("ЛЕСТНИЦА К РЕАКТОРУ →", V(78.5f, 0f, 0f), 0.28f);
+            k.Sign("ДВЕРЬ 2 · НУЖЕН КЛЮЧ 2 (КРАСНАЯ КАРТА)", V(77f, 0f, -1.8f), 0.24f);
+            if (!k.L1) k.Sign("ДВЕРЬ ЗАПЕРТА · НАПАРНИК ОТКРОЕТ ЕЁ В ПРОШЛОМ", V(75f, 0f, 1.8f), 0.22f);
+            k.Sign("КРАСНАЯ КАРТА В КАБИНЕТЕ", V(72f, 0f, 4.8f), 0.24f);
+            k.Sign("ШКАФЧИКИ · E — СПРЯТАТЬСЯ", V(73f, 0f, -7.6f), 0.24f);
+            k.Arrow(V(47f, 0f, 0f), 0f);
+            k.Arrow(V(56f, 0f, 0f), 0f);
+            k.Arrow(V(64f, 0f, 0f), 0f);
+            k.Arrow(V(70f, 0f, 0f), 0f);
+            k.Arrow(V(72f, 0f, 1.5f), -90f, 0.8f);
+            k.Arrow(V(72f, 0f, -1.5f), 90f, 0.8f);
+            k.Arrow(V(79f, 0f, 0f), 0f);
             k.Sign("СЛУЖЕБНАЯ ЗОНА · ТОЛЬКО ДЛЯ ПЕРСОНАЛА", V(55f, 0f, 0f), 0.35f);
 
             k.PlaceGuard(false, V(50f, 0f, -1.5f), V(62f, 0f, -1.5f), V(62f, 0f, 1.5f), V(50f, 0f, 1.5f));
@@ -241,6 +266,9 @@ namespace Echo.Levels
             k.PlaceMutant(V(54f, 0f, 0f));
             k.PlaceMutant(V(74f, 0f, -6.5f));
             k.PlaceMutant(V(75f, 0f, 5f));
+            k.PlaceMutant(V(47f, 0f, 3f), true);
+            k.PlaceMutant(V(64f, 0f, -7f), true);
+            k.PlaceMutant(V(72f, 0f, 0f), true);
         }
 
         // ---------- 3а. Лестница вниз ----------
@@ -255,6 +283,8 @@ namespace Echo.Levels
                 k.Box("Step", V(84f + i * 1.6f, 0.03f, 0f), V(0.5f, 0.06f, 5.6f), m.dark, false);
             k.Sign("УРОВЕНЬ -1 · ЗАКРЫТАЯ ЗОНА", V(88f, 0f, 1.7f), 0.28f);
             k.Sign("ВХОД ТОЛЬКО С ДОПУСКОМ", V(88f, 0f, -1.7f), 0.28f);
+            k.Arrow(V(85f, 0f, 0f), 0f);
+            k.Arrow(V(89f, 0f, 0f), 0f);
             k.PlaceCheckpoint(V(91f, 0f, 0f));
             if (!k.L1) k.Box("Rubble", V(86f, 0.3f, 2f), V(1.4f, 0.6f, 1.2f), m.rubble, true, 30f);
             k.GlowLight(V(88f, 3.2f, 0f), 2.5f, 8f);
@@ -323,6 +353,13 @@ namespace Echo.Levels
             k.Box("ElevatorFrameS", V(135.5f, 1.5f, -2.35f), V(0.6f, 3f, 0.3f), m.metal);
             k.Sign("ГРУЗОВОЙ ЛИФТ →", V(131.5f, 0f, 0f), 0.3f);
             k.Sign("РЕАКТОРНЫЙ УРОВЕНЬ -1", V(99f, 0f, 0f), 0.35f);
+            k.Sign("ШКАФЧИК · E — СПРЯТАТЬСЯ", V(98.5f, 0f, 6.2f), 0.22f);
+            k.Sign("ШКАФЧИК · E — СПРЯТАТЬСЯ", V(98.5f, 0f, -6.2f), 0.22f);
+            k.Sign("ВДВОЁМ ДЕРЖИТЕ E ЗДЕСЬ", V(110f, 0f, -3.4f), 0.26f);
+            k.Arrow(V(97f, 0f, 0f), 0f);
+            k.Arrow(V(101f, 0f, 0f), 0f);
+            k.Arrow(V(105f, 0f, 0f), 0f);
+            k.Arrow(V(131f, 0f, 1.6f), 0f);
 
             // Два военных: кольцо вокруг реактора и южная часть зала
             k.PlaceGuard(true, V(119.5f, 0f, -6f), V(119.5f, 0f, 6f), V(128.5f, 0f, 6f), V(128.5f, 0f, -6f));
@@ -340,8 +377,10 @@ namespace Echo.Levels
             k.GlowLight(V(108f, 3.5f, 0f), 4f, 14f);
             k.GlowLight(V(98f, 3.5f, 0f), 2.5f, 9f);
 
-            k.PlaceMutant(V(112f, 0f, -5f));
-            k.PlaceClot(V(118f, 0f, 4f));
+            k.PlaceMutant(V(117.5f, 0f, -5.5f));
+            k.PlaceClot(V(118f, 0f, 5f));
+            k.PlaceMutant(V(100f, 0f, -2f), true);
+            k.PlaceMutant(V(108f, 0f, 7f), true);
         }
 
         // ---------- 4а. Нижние лаборатории ----------
@@ -359,6 +398,14 @@ namespace Echo.Levels
             k.Box("ShowerStripN", V(138f, 0.03f, 2.7f), V(3f, 0.06f, 0.5f), m.glowCyan, false);
             k.Box("ShowerStripS", V(138f, 0.03f, -2.7f), V(3f, 0.06f, 0.5f), m.glowCyan, false);
             k.Sign("СТЕКЛЯННЫЙ КОРИДОР", V(160f, 0f, 0f), 0.3f);
+            k.Sign("КЛЮЧ 3 · КРИО-СКЛАД", V(159f, 0f, 2.1f), 0.24f);
+            k.Sign("ДВЕРЬ 3 · НУЖЕН КЛЮЧ 3", V(168f, 0f, -2.2f), 0.24f);
+            if (!k.L1) k.Sign("ДВЕРЬ ЗАПЕРТА · НАПАРНИК ОТКРОЕТ ЕЁ В ПРОШЛОМ", V(156f, 0f, 1.2f), 0.2f);
+            k.Arrow(V(142f, 0f, 0f), 0f);
+            k.Arrow(V(146f, 0f, 0f), 0f);
+            k.Arrow(V(159f, 0f, 1.7f), -90f, 0.8f);
+            k.Arrow(V(150f, 0f, -1.7f), 0f);
+            k.Arrow(V(168f, 0f, 0f), 0f);
             k.PlaceCheckpoint(V(138f, 0f, 0f));
 
             // Крио-склад (север)
@@ -410,6 +457,8 @@ namespace Echo.Levels
 
             k.PlaceMutant(V(156f, 0f, 1f));
             k.PlaceMutant(V(160f, 0f, 9f));
+            k.PlaceMutant(V(146f, 0f, -1f), true);
+            k.PlaceMutant(V(162f, 0f, -8f), true);
         }
 
         // ---------- 4б. Зал аппарата ----------
@@ -449,6 +498,8 @@ namespace Echo.Levels
             k.PlaceMachine(V(181f, 0f, 0f), 3f);
             k.Sign("АППАРАТ · НАЧАЛО ТРАПА", V(179.5f, 0f, 3.8f), 0.3f);
             k.Sign("ЗАЛ АППАРАТА -12", V(178f, 0f, -3.8f), 0.3f);
+            k.Arrow(V(175f, 0f, 0f), 0f);
+            k.Arrow(V(178f, 0f, 0f), 0f);
 
             // Галерея наблюдения за стеклом (север)
             k.Box("GalleryGlass", V(189f, 1.5f, 8f), V(24f, 3f, 0.15f), m.glass, true, 0f, 2);
@@ -474,6 +525,8 @@ namespace Echo.Levels
 
             k.PlaceClot(V(184f, 0f, -5f));
             k.PlaceClot(V(190f, 0f, 5.5f));
+            k.PlaceMutant(V(178f, 0f, 2f), true);
+            k.PlaceMutant(V(186f, 0f, 8f), true);
         }
     }
 }

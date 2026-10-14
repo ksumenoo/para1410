@@ -310,6 +310,9 @@ namespace Echo.Levels
 
         public void PlaceItem(ItemType type, int keyId, Vector3 pos)
         {
+            // Ключи, рюкзак и бочки живут в прошлом (линия 1) и попадают в будущее оттиском;
+            // на линии 2 лежат только пистолет и патроны.
+            if (!L1 && type != ItemType.Pistol && type != ItemType.Ammo) return;
             var go = new GameObject("Item_" + type + (keyId != 0 ? "_" + keyId : ""));
             go.transform.SetParent(_grp, false);
             go.transform.localPosition = pos;
@@ -373,13 +376,13 @@ namespace Echo.Levels
         }
 
         // Мутанты и сгустки (метки модуля боя) — только на линии 2.
-        public void PlaceMutant(Vector3 pos)
+        public void PlaceMutant(Vector3 pos, bool startDead = false)
         {
             if (L1) return;
             var go = new GameObject("MutantMarker");
             go.transform.SetParent(_grp, false);
             go.transform.localPosition = pos;
-            go.AddComponent<Echo.Combat.MutantMarker>();
+            go.AddComponent<Echo.Combat.MutantMarker>().startDead = startDead;
         }
 
         public void PlaceClot(Vector3 pos)
@@ -391,13 +394,54 @@ namespace Echo.Levels
             go.AddComponent<Echo.Combat.TimeClotMarker>();
         }
 
+        // Линия 2 отражена по X: «вперёд по уровню» там смотрит влево на экране, а текст не отражается.
+        static string FlipDirections(string t)
+        {
+            t = t.Replace("→", "\u0001").Replace("←", "→").Replace("\u0001", "←");
+            t = t.Replace("вправо", "\u0001").Replace("влево", "вправо").Replace("\u0001", "влево");
+            t = t.Replace("Вправо", "\u0001").Replace("Влево", "Вправо").Replace("\u0001", "Влево");
+            t = t.Replace("справа", "\u0001").Replace("слева", "справа").Replace("\u0001", "слева");
+            t = t.Replace("Справа", "\u0001").Replace("Слева", "Справа").Replace("\u0001", "Слева");
+            return t;
+        }
+
+        // Стрелка на полу. yaw 0 — «вперёд по уровню» (+X локально), -90 — на север (+Z), 90 — на юг (-Z).
+        // Позиции и повороты ядро отражает само, поэтому на линии 2 она смотрит куда надо.
+        public void Arrow(Vector3 pos, float yaw = 0f, float scale = 1f)
+        {
+            var mat = Glow("guide_arrow", Rgb(1f, 0.8f, 0.1f), Rgb(0.6f, 1f, 0.5f), 1.6f);
+            var root = new GameObject("Arrow");
+            root.transform.SetParent(_grp, false);
+            root.transform.localPosition = new Vector3(pos.x, 0.04f, pos.z);
+            root.transform.localRotation = Quaternion.Euler(0f, yaw, 0f);
+            Part(root.transform, new Vector3(-0.3f, 0f, 0f) * scale, new Vector3(1.4f, 0.03f, 0.3f) * scale, 0f, mat);
+            Part(root.transform, new Vector3(0.35f, 0f, 0.28f) * scale, new Vector3(0.9f, 0.03f, 0.3f) * scale, 40f, mat);
+            Part(root.transform, new Vector3(0.35f, 0f, -0.28f) * scale, new Vector3(0.9f, 0.03f, 0.3f) * scale, -40f, mat);
+        }
+
+        static void Part(Transform parent, Vector3 localPos, Vector3 size, float yaw, Material mat)
+        {
+            var go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            go.name = "ArrowPart";
+            go.transform.SetParent(parent, false);
+            go.transform.localPosition = localPos;
+            go.transform.localRotation = Quaternion.Euler(0f, yaw, 0f);
+            go.transform.localScale = size;
+            go.GetComponent<Renderer>().sharedMaterial = mat;
+            Object.DestroyImmediate(go.GetComponent<Collider>());
+        }
+
         // Табличка на русском: лежит на полу, читается сверху.
         public void Sign(string text, Vector3 pos, float size = 0.6f, float yaw = 0f)
         {
+            if (!L1) text = FlipDirections(text);
             var go = new GameObject("Sign_" + text);
             go.transform.SetParent(_grp, false);
-            go.transform.localPosition = new Vector3(pos.x, 0.05f, pos.z);
-            go.transform.localRotation = Quaternion.Euler(90f, yaw, 0f);
+            // Увеличено в 2.5 раза (но не шире ~12 м) и наклонено к камере (50° по X); yaw больше не нужен.
+            float scale = Mathf.Min(2.5f, 12f / Mathf.Max(1f, text.Length * size * 0.55f));
+            size *= scale;
+            go.transform.localPosition = new Vector3(pos.x, 0.35f + size * 0.4f, pos.z);
+            go.transform.localRotation = Quaternion.Euler(50f, 0f, 0f);
             var tm = go.AddComponent<TextMesh>();
             tm.text = text;
             tm.anchor = TextAnchor.MiddleCenter;

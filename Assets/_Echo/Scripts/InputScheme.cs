@@ -67,6 +67,8 @@ namespace Echo
             return -1;
         }
 
+        public static string InteractKey(Hero h) => Alt(h) ? "Enter" : "E";
+
         public static string Hint(Hero h) => Alt(h)
             ? "Стрелки — ход · Enter — действие/спрятаться · Backspace — положить · RCtrl — бросить · \\ — инвентарь · ] — ячейка · RShift — красться"
             : "WASD — ход · E — действие/спрятаться · G — положить · F — бросить · Tab — инвентарь · 1–0 — ячейка · Shift — красться";

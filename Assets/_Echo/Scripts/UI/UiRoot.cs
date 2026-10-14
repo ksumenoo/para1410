@@ -19,6 +19,8 @@ namespace Echo.UI
         AppearanceView _look;
         EndingView _ending;
         PauseView _pause;
+        IntroView _intro;
+        FlashView _flash;
         float _nextLegacy;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
@@ -53,8 +55,10 @@ namespace Echo.UI
             var root = canvasGo.transform;
             _hud = new HudView(root);
             _look = new AppearanceView(root);
+            _intro = new IntroView(root);
             _pause = new PauseView(root);
             _ending = new EndingView(root);
+            _flash = new FlashView(root);
             _menu = new MenuView(root);
         }
 
@@ -89,6 +93,8 @@ namespace Echo.UI
             _hud.Tick(inGame);
             _look.Tick(inGame);
             _ending.Tick(inGame);
+            _flash.Tick();
+            _intro.Tick(inGame);
             _pause.Tick();
         }
     }

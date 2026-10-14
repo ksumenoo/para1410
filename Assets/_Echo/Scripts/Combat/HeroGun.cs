@@ -2,28 +2,32 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Echo.Audio;
 
 namespace Echo.Combat
 {
     // Стрельба героя. Нужен ItemType.Pistol в инвентаре.
-    // Герой 2 — инверсный пистолет: обойма 6, пуля застревает в точке попадания и через 4 с летит обратно в обойму.
-    // Герой 1 — обычный пистолет: пачка ItemType.Ammo = 6 выстрелов, пачка тратится через ItemSystem.Consume.
+    // Герой 2 — инверсный пистолет: обойма 6 (в начале 3), пуля из стены/пола через 4 с летит обратно,
+    // пуля в убитом мутанте остаётся в нём; патроны дают «мёртвые до нас» (см. Mutant) — пуля вылетает из трупа в обойму.
+    // На рестарте комнаты все пули Героя 2 (в полёте, в стенах, в трупах) возвращаются в обойму.
+    // Герой 1 — обычный пистолет: пачка ItemType.Ammo = 12 выстрелов, пачка тратится через ItemSystem.Consume.
     // Управление: по сети ЛКМ + прицел мышью (своя верхняя половина), «Один ПК» — Space (Герой 1) / Numpad0 (Герой 2) по взгляду.
     [AddToHeroPrefab]
     public class HeroGun : NetworkBehaviour
     {
         public const int ClipSize = 6;
-        public const int ShotsPerPack = 6;
+        public const int ShotsPerPack = 12;
         public const float StuckSeconds = 4f;
 
-        public readonly NetworkVariable<int> InverseRounds = new NetworkVariable<int>(ClipSize);
+        public readonly NetworkVariable<int> InverseRounds = new NetworkVariable<int>(3);
         public readonly NetworkVariable<int> LoadedRounds = new NetworkVariable<int>(0);
 
-        [Header("Стрельба")]
-        public float range = 30f;
-        public float cooldown = 0.3f;
-        public float returnSpeed = 16f;
-        public float guardStunSeconds = 5f;
+        // Баланс — в коде (см. Enemy).
+        [System.NonSerialized] public float range = 30f;
+        [System.NonSerialized] public float cooldown = 0.3f;
+        [System.NonSerialized] public float returnSpeed = 16f;
+        [System.NonSerialized] public float guardStunSeconds = 5f;
+        [System.NonSerialized] public int startInverseRounds = 3;   // патронов в инверсной обойме в начале
 
         class Bullet
         {
@@ -31,6 +35,7 @@ namespace Echo.Combat
             public float Timer;
             public GameObject Go;
             public bool Returning;
+            public Mutant Holder; // пуля сидит в убитом мутанте и сама не вернётся
         }
 
         readonly List<Bullet> _serverBullets = new List<Bullet>();
@@ -70,14 +75,15 @@ namespace Echo.Combat
         public override void OnNetworkSpawn()
         {
             if (!IsServer) return;
-            GameEvents.ServerRoomRestart += ServerRefill;
-            GameEvents.ServerSwapped += ServerRefill;
+            InverseRounds.Value = Mathf.Clamp(startInverseRounds, 0, ClipSize);
+            GameEvents.ServerRoomRestart += ServerOnRestart;
+            GameEvents.ServerSwapped += ServerOnSwapped;
         }
 
         public override void OnNetworkDespawn()
         {
-            GameEvents.ServerRoomRestart -= ServerRefill;
-            GameEvents.ServerSwapped -= ServerRefill;
+            GameEvents.ServerRoomRestart -= ServerOnRestart;
+            GameEvents.ServerSwapped -= ServerOnSwapped;
             ClearFx();
         }
 
@@ -173,12 +179,44 @@ namespace Echo.Combat
             Vector3 origin = transform.position + Vector3.up * 1f;
             Vector3 end = Trace(origin, dir, line, inverse, out var enemy, out var guard);
 
-            if (enemy != null) enemy.ServerKill(_hero);
-            if (guard != null && CombatDirector.I != null && CombatDirector.I.ServerStunGuard(guard, guardStunSeconds))
+            bool lodged = false;
+            if (enemy != null && enemy.ServerKill(_hero) && inverse && enemy is Mutant m && m.ServerLodgeBullet())
+            {
+                lodged = true;
+                _serverBullets.Add(new Bullet { Pos = end, Holder = m });
+            }
+            if (guard != null && guard.IsSpawned)
+            {
+                guard.ServerStun(guardStunSeconds);
                 StunFxRpc(guard.NetworkObjectId, guardStunSeconds);
+            }
 
-            if (inverse) _serverBullets.Add(new Bullet { Pos = end, Timer = StuckSeconds });
-            ShotFxRpc(origin, end, inverse);
+            if (inverse && !lodged) _serverBullets.Add(new Bullet { Pos = end, Timer = StuckSeconds });
+            ShotFxRpc(origin, end, inverse, lodged);
+        }
+
+        // Сервер: пуля вылетела из трупа «мёртвого до нас» и летит в обойму.
+        public void ServerCatchBullet(Vector3 from)
+        {
+            if (!IsServer) return;
+            _serverBullets.Add(new Bullet { Pos = from, Timer = 0f });
+            CatchFxRpc(from);
+        }
+
+        // Отладка (пульт боя): выстрел по направлению, как будто нажата кнопка.
+        public void DebugShoot(Vector3 dir)
+        {
+            if (!IsServer) return;
+            dir.y = 0f;
+            if (dir.sqrMagnitude > 0.001f) transform.rotation = Quaternion.LookRotation(dir.normalized);
+            _serverCooldown = 0f;
+            ServerShoot(dir);
+        }
+
+        public int ServerBulletsOut => _serverBullets.Count;
+        public int ServerBulletsInCorpses
+        {
+            get { int n = 0; foreach (var b in _serverBullets) if (b.Holder != null) n++; return n; }
         }
 
         // Попадание считает сервер: стены по физике (стекло пропускает), враги своей линии — по радиусу.
@@ -232,6 +270,7 @@ namespace Echo.Combat
             for (int i = _serverBullets.Count - 1; i >= 0; i--)
             {
                 var b = _serverBullets[i];
+                if (b.Holder != null) continue;
                 b.Timer -= dt;
                 if (b.Timer > 0f) continue;
                 b.Pos = Vector3.MoveTowards(b.Pos, gun, returnSpeed * dt);
@@ -244,22 +283,39 @@ namespace Echo.Combat
             }
         }
 
-        void ServerRefill()
+        // Рестарт комнаты: все пули Героя 2 (в полёте, в стенах, в трупах) — обратно в обойму.
+        void ServerOnRestart()
         {
+            InverseRounds.Value = Mathf.Min(ClipSize, InverseRounds.Value + _serverBullets.Count);
             _serverBullets.Clear();
-            InverseRounds.Value = ClipSize;
+            ResetFxRpc();
+        }
+
+        // Сопряжение: Герой 2 ушёл на линию 1 — все его пули возвращаются сразу (убитые им мутанты встают для Героя 1).
+        void ServerOnSwapped()
+        {
+            InverseRounds.Value = Mathf.Min(ClipSize, InverseRounds.Value + _serverBullets.Count);
+            _serverBullets.Clear();
             ResetFxRpc();
         }
 
         // ---------- Эффекты (все клиенты) ----------
 
         [Rpc(SendTo.ClientsAndHost)]
-        void ShotFxRpc(Vector3 origin, Vector3 end, bool inverse)
+        void ShotFxRpc(Vector3 origin, Vector3 end, bool inverse, bool lodged)
         {
             CombatFx.Tracer(origin, end, inverse);
+            AudioManager.Play(Sfx.Shot);
             if (_hero.rigAnimator && _hero.rigAnimator.runtimeAnimatorController != null)
                 _hero.rigAnimator.SetTrigger("Shoot");
-            if (inverse) _fxBullets.Add(new Bullet { Pos = end, Timer = StuckSeconds, Go = CombatFx.Bullet(end) });
+            // Пулю в трупе рисует сам мутант (Mutant.HoldsBullet).
+            if (inverse && !lodged) _fxBullets.Add(new Bullet { Pos = end, Timer = StuckSeconds, Go = CombatFx.Bullet(end) });
+        }
+
+        [Rpc(SendTo.ClientsAndHost)]
+        void CatchFxRpc(Vector3 from)
+        {
+            _fxBullets.Add(new Bullet { Pos = from, Timer = 0f, Go = CombatFx.Bullet(from) });
         }
 
         [Rpc(SendTo.ClientsAndHost)]
@@ -296,6 +352,7 @@ namespace Echo.Combat
                 if (!b.Returning)
                 {
                     b.Returning = true;
+                    AudioManager.Play(Sfx.ShotBack);
                     var trail = b.Go.GetComponent<TrailRenderer>();
                     if (trail) { trail.Clear(); trail.emitting = true; }
                 }

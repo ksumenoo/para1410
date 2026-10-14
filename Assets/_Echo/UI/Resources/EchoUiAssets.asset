@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c952ea39f2ba464cacc27c075910ce7, type: 3}
   m_Name: EchoUiAssets
   m_EditorClassIdentifier: Echo.Game::Echo.UI.EchoUiAssets
-  endLoop: {fileID: 0}
-  endOneBody: {fileID: 0}
-  slot: {fileID: 0}
-  radioTalk: {fileID: 0}
-  radioMuted: {fileID: 0}
+  endLoop: {fileID: 21300000, guid: 6a83450732b22ef43b70ff04798a39c7, type: 3}
+  endOneBody: {fileID: 21300000, guid: 5db0db7d60d087042ae5cbd8acd36d4f, type: 3}
+  slot: {fileID: 21300000, guid: 15cd509a16bbf7f4783e69cc27399dae, type: 3}
+  radioTalk: {fileID: 21300000, guid: f4a98f5ad52e1b041b67c5fea43614a1, type: 3}
+  radioMuted: {fileID: 21300000, guid: 04264a3c27bae064f8411623e098637c, type: 3}
   itemIcons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 8215a191b19a18d4f8a0a088cba075fa, type: 3}
+  - {fileID: 21300000, guid: f39cd0e9038221640a2ebe9c87849e8c, type: 3}
+  - {fileID: 21300000, guid: da8ce1a66c315114e83f0d2b383515a6, type: 3}
+  - {fileID: 21300000, guid: 83cf627f23b183b41bc1646038a6e52e, type: 3}
+  - {fileID: 21300000, guid: 54cfae54f633b8049b397a299fafcd06, type: 3}

@@ -134,7 +134,7 @@ namespace Echo
 
         public static void ServerDrop(Hero hero, Item it)
         {
-            var local = hero.LocalPos + hero.transform.forward * 0.9f;
+            var local = TimeLines.I.ToLocal(hero.transform.position + hero.transform.forward * 0.9f, hero.Line.Value);
             Place(hero, it, local, "Положено: ");
         }
 

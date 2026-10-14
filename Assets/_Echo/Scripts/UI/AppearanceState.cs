@@ -41,6 +41,12 @@ namespace Echo.UI
 
         public bool AllReady => ReadyMask.Value == 3;
 
+        // Бит 0 — Герой 1 нажал «Начать» на вступительном экране, бит 1 — Герой 2.
+        public readonly NetworkVariable<int> StartMask = new NetworkVariable<int>(0);
+
+        // Пока оба не нажали «Начать», враги стоят (GameEvents.EnemiesPaused, только сервер).
+        bool _pausedEnemies;
+
         public override void OnNetworkSpawn()
         {
             I = this;
@@ -55,11 +61,48 @@ namespace Echo.UI
                 suit = UnityEngine.Random.Range(0, Count(5)),
             };
             Data.Value = d;
+
+            if (!UiSettings.SkipIntro)
+            {
+                _pausedEnemies = true;
+                GameEvents.EnemiesPaused = true;
+            }
         }
 
         public override void OnNetworkDespawn()
         {
             if (I == this) I = null;
+            if (_pausedEnemies) { _pausedEnemies = false; GameEvents.EnemiesPaused = false; }
+        }
+
+        // Локальный игрок нажал «Начать»: сообщаем серверу за каждого своего героя
+        // (в режиме «Один ПК» оба героя у одного игрока — хватает одного нажатия).
+        // true — сообщение ушло.
+        public bool SendStart()
+        {
+            if (!IsSpawned) return false;
+            bool sent = false;
+            foreach (var h in Hero.All)
+            {
+                if (!h.IsSpawned || !h.IsOwner) continue;
+                StartRpc(h.HeroId);
+                sent = true;
+            }
+            return sent;
+        }
+
+        [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+        void StartRpc(int heroId, RpcParams rpcParams = default)
+        {
+            if (heroId < 1 || heroId > 2) return;
+            var hero = Hero.Get(heroId);
+            if (hero == null || hero.OwnerClientId != rpcParams.Receive.SenderClientId) return;
+            StartMask.Value |= 1 << (heroId - 1);
+            if (StartMask.Value == 3 && _pausedEnemies)
+            {
+                _pausedEnemies = false;
+                GameEvents.EnemiesPaused = false;
+            }
         }
 
         // Сколько вариантов у части (из риг художника, иначе числа из плана).

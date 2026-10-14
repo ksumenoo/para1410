@@ -77,8 +77,8 @@ GameObject:
   - component: {fileID: 8202741348544467255}
   - component: {fileID: 859757514853788103}
   - component: {fileID: 5706242781089966635}
-  - component: {fileID: 6257292441907440465}
   - component: {fileID: 742488177726056911}
+  - component: {fileID: 6257292441907440465}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1796236485
+  GlobalObjectIdHash: 3548410622
   InScenePlacedSourceGlobalObjectIdHash: 0
   m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
@@ -227,23 +227,6 @@ MonoBehaviour:
   rigAura: {fileID: 7756180347140811263}
   rigAppearance: {fileID: 1530219153560782987}
   cameraPitch: 50
---- !u!114 &6257292441907440465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7555201963257865504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10cc00564b9088e4b94ad564ab34f6c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Echo.Game::Echo.Combat.HeroGun
-  ShowTopMostFoldoutHeaderGroup: 1
-  range: 30
-  cooldown: 0.3
-  returnSpeed: 16
-  guardStunSeconds: 5
 --- !u!114 &742488177726056911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,7 +240,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Echo.Game::Echo.Combat.HeroHealth
   ShowTopMostFoldoutHeaderGroup: 1
-  invulnSeconds: 1
+--- !u!114 &6257292441907440465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7555201963257865504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10cc00564b9088e4b94ad564ab34f6c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Echo.Game::Echo.Combat.HeroGun
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1001 &2008115083828431165
 PrefabInstance:
   m_ObjectHideFlags: 0

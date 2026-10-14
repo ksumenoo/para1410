@@ -38,7 +38,18 @@ namespace Echo.Ending
 
         void OnSwapped()
         {
-            if (this != null && IsSpawned) Swapped.Value = true;
+            if (this == null || !IsSpawned) return;
+            Swapped.Value = true;
+            SwapFlashRpc();
+        }
+
+        // Вспышка в момент сопряжения: приходит и хосту, и клиентам, интерфейс подписывается на SwapFlash.
+        public static event System.Action SwapFlash;
+
+        [Rpc(SendTo.ClientsAndHost)]
+        void SwapFlashRpc()
+        {
+            SwapFlash?.Invoke();
         }
 
         void Update()
@@ -79,14 +90,18 @@ namespace Echo.Ending
         public static string Title(int choice) =>
             choice == Loop ? "Петля" : choice == OneBody ? "Одно тело" : "";
 
+        // Короткая строка-эпилог под текстом концовки.
+        public static string Epilogue(int choice) =>
+            choice == Loop ? "…и всё начинается заново." : choice == OneBody ? "Продолжение следует…" : "";
+
         public static string Text(int choice)
         {
             if (choice == Loop)
                 return "Герой 2 шагнул в кольца аппарата. Для Героя 1 он теперь лишь призрачный силуэт у края трапа, " +
-                       "а время замкнулось само на себе — и всё начнётся сначала.";
+                       "а время замкнулось само на себе.";
             if (choice == OneBody)
-                return "Два героя синхронизировались в одно тело. Оно дрожит от темпорального излучения, " +
-                       "но дышит. Прошлое и будущее наконец совпали.";
+                return "Два разума — одно тело. Вы проснулись снова, этим же утром, и помните каждый будущий момент. " +
+                       "Теперь вы знаете, как остановить катастрофу.";
             return "";
         }
     }

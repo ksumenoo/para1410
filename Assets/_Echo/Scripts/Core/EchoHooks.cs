@@ -23,6 +23,10 @@ namespace Echo
         // Герои поменялись местами у реактора.
         public static event Action ServerSwapped;
 
+        // Сервер: враги стоят и никого не замечают (пока игроки читают вступление / выбирают внешность).
+        // Включает модуль интерфейса, учитывают охрана (ядро) и враги боя. Сбрасывается при старте партии.
+        public static bool EnemiesPaused;
+
         internal static void RaiseGameStarted() => ServerGameStarted?.Invoke();
         internal static void RaiseRoomRestart() => ServerRoomRestart?.Invoke();
         internal static void RaiseSwapped() => ServerSwapped?.Invoke();

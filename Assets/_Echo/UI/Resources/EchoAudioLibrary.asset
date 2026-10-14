@@ -12,19 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec4b7308c9bddba418ca9cb5642c266e, type: 3}
   m_Name: EchoAudioLibrary
   m_EditorClassIdentifier: Echo.Game::Echo.Audio.EchoAudioLibrary
-  musicPast: {fileID: 0}
-  musicFuture: {fileID: 0}
-  steps: []
-  pickup: {fileID: 0}
-  drop: {fileID: 0}
-  door: {fileID: 0}
-  alarm: {fileID: 0}
-  shot: {fileID: 0}
-  shotBack: {fileID: 0}
-  hit: {fileID: 0}
-  reactorHum: {fileID: 0}
-  click: {fileID: 0}
-  radioOn: {fileID: 0}
-  radioOff: {fileID: 0}
-  radioNoise: {fileID: 0}
-  ending: {fileID: 0}
+  musicPast: {fileID: 8300000, guid: b68aa867cea435247b7fd19b6b0a806c, type: 3}
+  musicFuture: {fileID: 8300000, guid: cdadcfc55746afd41bae080672d6b5e6, type: 3}
+  steps:
+  - {fileID: 8300000, guid: 5875cdfad711e5542ada23404b457937, type: 3}
+  - {fileID: 8300000, guid: d6ca72edbe833854fb24c98653d2738c, type: 3}
+  pickup: {fileID: 8300000, guid: aa1a544d0c11f84488ed0a3b83947a83, type: 3}
+  drop: {fileID: 8300000, guid: 42191c3c8be0634408f4456dacff1fd1, type: 3}
+  door: {fileID: 8300000, guid: e11427e7df2f9f544a7a06ebd2fcdd7b, type: 3}
+  alarm: {fileID: 8300000, guid: b5b87017b84c88e4eba149efc15c78bd, type: 3}
+  shot: {fileID: 8300000, guid: f260f71210ea11d408d47347c48d6568, type: 3}
+  shotBack: {fileID: 8300000, guid: 2a3a36ad307df9149bf1cfb673cda983, type: 3}
+  hit: {fileID: 8300000, guid: 706cb3cd6606c8c4a8098f7067726859, type: 3}
+  reactorHum: {fileID: 8300000, guid: 89afd213c67662d4e9596f0f43339d10, type: 3}
+  click: {fileID: 8300000, guid: 6b0095a3c030cfb44b6bc0afe4961353, type: 3}
+  radioOn: {fileID: 8300000, guid: c9c734677528cd14cab903564e1f68b6, type: 3}
+  radioOff: {fileID: 8300000, guid: d0fe2fac17f6b974bb7e109fa9b4281b, type: 3}
+  radioNoise: {fileID: 8300000, guid: e435639d018d06f4d8b872cbd345987d, type: 3}
+  ending: {fileID: 8300000, guid: 15a72a7ae1b59ce469d04b94bbab4267, type: 3}
